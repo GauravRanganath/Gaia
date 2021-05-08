@@ -4,7 +4,7 @@ from .models import Event
 
 class EventView(CreateView):
     model = Event
-    fields = ['event']
+    fields = ['location']
     template_name = 'events/home.html'
     success_url = '/'
 

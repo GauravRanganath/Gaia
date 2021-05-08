@@ -34,14 +34,14 @@
     var map = new mapboxgl.Map({
         container: 'map', // container ID
         style: 'mapbox://styles/mapbox/streets-v11', // style URL
-        center: [-74.5, 40], // starting position [lng, lat]
+        center: [-79.396091, 43.66095], // starting position [lng, lat]
         zoom: 9 // starting zoom
     });
 
     {% for event in events %}
     var marker = new mapboxgl.Marker()
         .setLngLat([{{ event.long }}, {{ event.lat }}])
-        .setPopup(new mapboxgl.Popup().setHTML("<p>{{ event.event }}</p>"))
+        .setPopup(new mapboxgl.Popup().setHTML("<p>{{ event.event_name }}</p>"))
         .addTo(map);
     {% endfor %}
 
