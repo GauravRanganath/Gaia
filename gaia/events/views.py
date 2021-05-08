@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView
 from .models import Event
+import json
 
 class EventView(CreateView):
     model = Event
@@ -35,6 +36,7 @@ def serialize(data):
     geojson['data']['features'] = []
 
     event_collection = geojson['data']['features']
+
     for event in data:
         event_instance = {}
         event_instance['type'] = 'Feature'
@@ -48,6 +50,7 @@ def serialize(data):
         properties['location'] = event.location
         properties['short_description'] = event.short_description
         properties['long_description'] = event.long_description
+        properties['event_id'] = event.id
 
         event_instance['geometry'] = {'type': 'Point', 'coordinates': [event.long, event.lat]}
 
@@ -58,5 +61,7 @@ def show_map(request):
 
     context =  {}
     context['mapbox_access_token'] = 'pk.eyJ1IjoibmtyYW1hOTkiLCJhIjoiY2tvZncwbjE1MGF0dTJvcG5uM3dlZTVqaCJ9.5hAFk9giRgnqm8SmSfFz3Q'
-    context['events'] = Event.objects.all()
+    context['json_events'] = json.dumps(serialize(Event.objects.all()))
+    context["events"] = Event.objects.all()
+
     return render(request, 'events/home.html', context)

@@ -16,14 +16,14 @@
     <title>Hello, world!</title>
   </head>
   <body>
-    <h1>Hello, world!</h1>
-
     <div id='map' style='width: 400px; height: 300px;'></div>
     
     <script>
     // TO MAKE THE MAP APPEAR YOU MUST
     // ADD YOUR ACCESS TOKEN FROM
     // https://account.mapbox.com
+
+
     mapboxgl.accessToken = '{{ mapbox_access_token }}';
     var map = new mapboxgl.Map({
         container: 'map', // container ID
@@ -32,13 +32,67 @@
         zoom: 9 // starting zoom
     });
 
-    {% for event in events %}
-    var marker = new mapboxgl.Marker()
-        .setLngLat([{{ event.long }}, {{ event.lat }}])
-        .setPopup(new mapboxgl.Popup().setHTML("<p>{{ event.event_name }}</p>"))
-        .addTo(map);
-    {% endfor %}
+    var myJSONList = (("{{json_events}}").replace(/&(l|g|quo)t;/g, function(a,b){
+                return {
+                    l   : '<',
+                    g   : '>',
+                    quo : '"'
+                }[b];
+            }));
 
+    myData = JSON.parse( myJSONList );
+
+    map.on('load', function() {
+      map.addSource('events_list', myData);
+
+      map.addLayer({
+        'id': 'events_list',
+        'type': 'circle',
+        'source': 'events_list',
+        'paint': {
+          'circle-color': '#4264fb',
+          'circle-radius': 6,
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#ffffff'
+          }
+      });
+
+      var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+      }); 
+
+      map.on('mouseenter', 'events_list', function (e) {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+        
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var event_name = e.features[0].properties.event_name;
+        var short_desc = e.features[0].properties.short_description;
+        
+        var pop_desc = "<strong>" + event_name + "</h=strong><p>" + short_desc + "</p>"
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+        
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(coordinates).setHTML(pop_desc).addTo(map);
+      });
+
+      map.on('mouseleave', 'events_list', function () {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+      });
+
+      map.on('click', 'events_list', function (e) {
+        window.open("http://127.0.0.1:8000/"+ e.features[0].properties.event_id);
+      });
+      
+    });
     </script>
 
     <!-- Optional JavaScript -->
