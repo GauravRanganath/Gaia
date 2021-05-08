@@ -15,4 +15,6 @@ class Event(models.Model):
         self.long = g[1]
         return super(Event, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return self.event
 

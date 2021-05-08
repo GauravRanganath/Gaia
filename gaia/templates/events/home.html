@@ -18,6 +18,11 @@
   <body>
     <h1>Hello, world!</h1>
 
+    <form method='POST'>
+      {% csrf_token %}
+          {{ form }}
+          <input type="submit" value="submit event" />
+    </form>
 
     <div id='map' style='width: 400px; height: 300px;'></div>
     
@@ -36,6 +41,7 @@
     {% for event in events %}
     var marker = new mapboxgl.Marker()
         .setLngLat([{{ event.long }}, {{ event.lat }}])
+        .setPopup(new mapboxgl.Popup().setHTML("<p>{{ event.event }}</p>"))
         .addTo(map);
     {% endfor %}
 
