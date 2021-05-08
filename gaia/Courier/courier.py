@@ -11,11 +11,6 @@ resp = client.send(
   },
   data={
   },
-  "override": {
-    "twilio": {
-      "body": {
-      }
-    },
 )
 
 print(resp['messageId'])
