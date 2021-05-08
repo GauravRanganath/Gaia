@@ -1,4 +1,6 @@
-gaia/addresses/__pycache__
-gaia/addresses/migrations
+gaia/events/__pycache__
+gaia/events/migrations
 gaia/gaia/__pycache__
 gaia/db.sqlite3
+gaia/events/__pycache__/__init__.cpython-38.pyc
+gaia/events/__pycache__
