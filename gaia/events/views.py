@@ -26,3 +26,37 @@ class CreateEventView(CreateView):
        context['mapbox_access_token'] = 'pk.eyJ1IjoibmtyYW1hOTkiLCJhIjoiY2tvZncwbjE1MGF0dTJvcG5uM3dlZTVqaCJ9.5hAFk9giRgnqm8SmSfFz3Q'
        context['events'] = Event.objects.all()
        return context
+
+def serialize(data):
+    geojson = {}
+    geojson['type'] = 'geojson'
+    geojson['data'] = {}
+    geojson['data']['type'] = 'FeatureCollection'
+    geojson['data']['features'] = []
+
+    event_collection = geojson['data']['features']
+    for event in data:
+        event_instance = {}
+        event_instance['type'] = 'Feature'
+        event_instance['properties'] = {}
+
+        properties = event_instance['properties']
+        properties['event_name'] = event.event_name
+        properties['host_name'] = event.host_name
+        properties['start_date'] = (event.start_date).strftime("%d-%b-%Y %H:%M")
+        properties['end_date'] = (event.end_date).strftime("%d-%b-%Y %H:%M")
+        properties['location'] = event.location
+        properties['short_description'] = event.short_description
+        properties['long_description'] = event.long_description
+
+        event_instance['geometry'] = {'type': 'Point', 'coordinates': [event.long, event.lat]}
+
+        event_collection.append(event_instance)
+    return geojson
+
+def show_map(request):
+
+    context =  {}
+    context['mapbox_access_token'] = 'pk.eyJ1IjoibmtyYW1hOTkiLCJhIjoiY2tvZncwbjE1MGF0dTJvcG5uM3dlZTVqaCJ9.5hAFk9giRgnqm8SmSfFz3Q'
+    context['events'] = Event.objects.all()
+    return render(request, 'events/home.html', context)
