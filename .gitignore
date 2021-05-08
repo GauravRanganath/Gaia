@@ -1,0 +1,4 @@
+gaia/addresses/__pycache__
+gaia/addresses/migrations
+gaia/gaia/__pycache__
+gaia/db.sqlite3
