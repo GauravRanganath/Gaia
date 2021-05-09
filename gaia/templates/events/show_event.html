@@ -1,6 +1,11 @@
 <!doctype html>
 <html lang="en">
   <head>
+
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'events/style.css' %}">
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,18 +17,52 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css' rel='stylesheet' />
 
-    <title>Hello, world!</title>
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+    <title>Gaia</title>
   </head>
   <body>
-    
-    <h1>{{ event_name }}</h1>
-    <h1>{{ host_name }}</h1>
 
-    <div id='map' style='width: 400px; height: 300px;'></div>
+    <nav class="navbar custom-nav">
+      <a class="navbar-brand nav-text" href="#">
+      <img src="{% static 'events/Earth-Icon.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+      Gaia
+      </a>
+    </nav>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="sidebar-profile">
+            {% load static %}
+            <img src="{% static 'events/gaurav.jpg' %}" class="profile-pic" />
+            <h1 class="lato-text profile-name">Gaurav Ranganath</h1>
+            <h2 class="lato-text profile-location">Toronto, ON</h2>
+            <button onclick="window.open('create_event/')" type="button" class="btn btn-primary btn-create-event">CREATE EVENT</button>
+          </div>
+        </div>
+        <div class="col-sm-6">
+            <div class = "show-event">
+                <h1>{{ event_name }}</h1>
+                <p>Event by <strong>{{ host_name }}</strong></p>
+                <p>{{ date_start }} to {{ date_stop }}</p>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="show-event-map" id='map'></div>
+        </div>
+      </div>
+
+    <!-- Image and text -->
 
     <script>
+    // TO MAKE THE MAP APPEAR YOU MUST
+    // ADD YOUR ACCESS TOKEN FROM
+    // https://account.mapbox.com
 
-    mapboxgl.accessToken = '{{ mapbox_access_token }}';
+
+     mapboxgl.accessToken = '{{ mapbox_access_token }}';
     var map = new mapboxgl.Map({
         container: 'map', // container ID
         style: 'mapbox://styles/mapbox/streets-v11', // style URL
@@ -66,7 +105,6 @@
         closeOnClick: false
       }).setLngLat({{ geometry }}).addTo(map);
     });
-    
     </script>
 
     <!-- Optional JavaScript -->
