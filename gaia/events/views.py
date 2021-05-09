@@ -18,7 +18,7 @@ class EventView(CreateView):
 
 class CreateEventView(CreateView):
     model = Event
-    fields = ['location', 'event_name']
+    fields = ['event_name', 'host_name', 'start_date', 'end_date', 'location', 'short_description', 'long_description']
     template_name = 'events/create_event.html'
     success_url = 'create_event'
 

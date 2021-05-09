@@ -19,7 +19,7 @@
 
     <form method='POST'>
       {% csrf_token %}
-          {{ form }}
+          {{ form.as_table }}
           <input type="submit" value="submit event" />
     </form>
 
