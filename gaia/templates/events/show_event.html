@@ -28,15 +28,45 @@
         container: 'map', // container ID
         style: 'mapbox://styles/mapbox/streets-v11', // style URL
         center: {{ geometry }}, // starting position [lng, lat]
-        zoom: 9, // starting zoom
+        zoom: 13, // starting zoom
         interactive: false
     });
 
-    var marker = new mapboxgl.Marker()
-    .setLngLat({{ geometry }})
-    .setPopup(new mapboxgl.Popup().setHTML("<p>{{ event.event_name }}/p>"))
-    .addTo(map);
+    map.on('load', function() {
+      map.addSource('specific_event', {
+          'type': 'geojson',
+          'data': {
+            'type': 'FeatureCollection',
+            'features': [
+                {
+                  'type': 'Feature',
+                  'geometry': {
+                    'type': 'Point',
+                    'coordinates': {{ geometry }}
+                  }
+                }
+            ]
+          }
+      });
 
+      map.addLayer({
+        'id': 'specific_event',
+        'type': 'circle',
+        'source': 'specific_event',
+        'paint': {
+        'circle-color': '#4264fb',
+        'circle-radius': 6,
+        'circle-stroke-width': 2,
+        'circle-stroke-color': '#ffffff'
+      }
+      });
+
+      var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+      }).setLngLat({{ geometry }}).addTo(map);
+    });
+    
     </script>
 
     <!-- Optional JavaScript -->
