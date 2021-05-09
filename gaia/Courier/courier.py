@@ -2,12 +2,13 @@ from trycourier import Courier
 
 client = Courier(auth_token="pk_prod_3NF6S5AZ4S4TSRPEM6AJVNRVCFJT")
 
+
 resp = client.send(
   event="3T9NBKMKHV4WTVPHZRPKF1Y5NVQ5",
-  recipient="00837b94-3e03-42bc-8f1b-eabe0370e33b",
+  recipient="bc356640-1f3b-4d23-81c4-9914adbdc428",
   profile={
       "email": "malharshah2000@gmail.com",
-      "phone_number": "647-893-7552"
+      "phone_number": "647-687-2969"
   },
   data={
   },
