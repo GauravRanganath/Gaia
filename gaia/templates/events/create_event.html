@@ -1,6 +1,11 @@
 <!doctype html>
 <html lang="en">
   <head>
+
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'events/style.css' %}">
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,16 +17,81 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css' rel='stylesheet' />
 
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 
     <title>Gaia</title>
   </head>
   <body>
 
-    <form method='POST'>
-      {% csrf_token %}
-          {{ form.as_table }}
-          <input type="submit" value="submit event" />
-    </form>
+    <nav class="navbar custom-nav">
+      <a class="navbar-brand nav-text" href="#">
+      <img src="{% static 'events/Earth-Icon.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+      Gaia
+      </a>
+    </nav>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="sidebar-profile">
+            {% load static %}
+            <img src="{% static 'events/gaurav.jpg' %}" class="profile-pic" />
+            <h1 class="lato-text profile-name">Gaurav Ranganath</h1>
+            <h2 class="lato-text profile-location">Toronto, ON</h2>
+            <button onclick="window.open('create_event/')" type="button" class="btn btn-primary btn-create-event">CREATE EVENT</button>
+          </div>
+        </div>
+        <div class="col-sm-9">
+
+            <div class="form-container">
+
+                <h1>Create Event</h1>
+                <br>
+                <form method='POST'>
+                    {% csrf_token %}
+                      <div class="form-group">
+                          <label>Event Name</label><br>
+                          {{ form.event_name }}
+                      </div>
+              
+                      <div class="form-group">
+                          <label>Host Name</label> <br>
+                          {{ form.host_name }} 
+                      </div>
+              
+                      <div class="form-group">
+                          <label>Start Date</label> <br>
+                          {{ form.start_date }}
+                      </div>
+              
+                      <div class="form-group">
+                            <label>End Date</label> <br>
+                          {{ form.end_date }}
+                      </div>
+              
+                      <div class="form-group">
+                        <label>Location</label> <br>
+                          {{ form.location }}
+                      </div>
+              
+                      <div class="form-group">
+                        <label>SMS Alert</label> <br>
+                          {{ form.short_description }}
+                      </div>
+              
+                      <div class="form-group">
+                        <label>Description</label> <br>
+                          {{ form.long_description }}
+                      </div>
+              
+                      <div class="form-group">
+                          <input type="submit" value="SUBMIT BUTTON"/>
+                      </div>
+                  </form>
+            </div>
+        </div>
+      </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -70,3 +70,36 @@ body{
     width: 100%;
     height: 100vh;
 }
+
+.btn-create-event {
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.form-container {
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+#id_event_name {
+    width: 1000px;
+}
+
+#id_host_name {
+    width: 1000px;
+}
+
+#id_location {
+    width: 1000px;
+    height: 30px;
+}
+
+#id_short_description {
+    width: 1000px;
+    height: 100px;
+}
+
+#id_long_description {
+    width: 1000px;
+    height: 100px;
+}

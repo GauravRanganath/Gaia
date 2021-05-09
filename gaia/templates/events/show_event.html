@@ -42,14 +42,17 @@
             <button onclick="window.open('create_event/')" type="button" class="btn btn-primary btn-create-event">CREATE EVENT</button>
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-5">
             <div class = "show-event">
                 <h1>{{ event_name }}</h1>
                 <p>Event by <strong>{{ host_name }}</strong></p>
                 <p>{{ start_date }} to {{ end_date }}</p>
+                <p>{{ location }}</p>
+                <button onclick="window.open('create_event/')" type="button" class="btn btn-primary btn-create-event">RSVP</button>
+                <p>{{ long_description }}</p>
             </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <div class="show-event-map" id='map'></div>
         </div>
       </div>

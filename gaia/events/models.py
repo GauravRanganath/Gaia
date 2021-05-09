@@ -5,15 +5,15 @@ from django.utils import timezone
 mapbox_access_token = 'pk.eyJ1IjoibmtyYW1hOTkiLCJhIjoiY2tvZncwbjE1MGF0dTJvcG5uM3dlZTVqaCJ9.5hAFk9giRgnqm8SmSfFz3Q'
 
 class Event(models.Model):
-    event_name = models.CharField(max_length=255, default="null")
-    host_name = models.CharField(max_length=255, default="null")
+    event_name = models.CharField(max_length=255, default="")
+    host_name = models.CharField(max_length=255, default="")
     start_date = models.DateTimeField(default=timezone.now())
     end_date = models.DateTimeField(default=timezone.now())
     location = models.TextField()
     lat = models.FloatField(blank=True, null=True)
     long = models.FloatField(blank=True, null=True)
-    short_description = models.TextField(default="short description")
-    long_description = models.TextField(default="long description")
+    short_description = models.TextField(default="")
+    long_description = models.TextField(default="")
 
     def save(self, *args, **kwargs):
         g = geocoder.mapbox(self.location, key=mapbox_access_token)
