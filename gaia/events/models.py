@@ -25,3 +25,11 @@ class Event(models.Model):
     def __str__(self):
         return self.event_name
 
+class UserProfile(models.Model):
+    name = models.CharField(max_length=255, default="<noname>")
+    email = models.CharField(max_length=255, default="<noemail>")
+    phone_number = models.CharField(max_length=12)
+    location = models.TextField()
+
+    def __str__(self):
+        return self.name
