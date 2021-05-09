@@ -65,3 +65,21 @@ def show_map(request):
     context["events"] = Event.objects.all()
 
     return render(request, 'events/home.html', context)
+
+def show_event(request, event_id):
+    context = {}
+    
+    context['mapbox_access_token'] = 'pk.eyJ1IjoibmtyYW1hOTkiLCJhIjoiY2tvZncwbjE1MGF0dTJvcG5uM3dlZTVqaCJ9.5hAFk9giRgnqm8SmSfFz3Q'
+
+    event = Event.objects.get(id=event_id)
+    context['event_name'] = event.event_name
+    context['host_name'] = event.host_name
+    context['start_date'] = (event.start_date).strftime("%d-%b-%Y %H:%M")
+    context['end_date'] = (event.end_date).strftime("%d-%b-%Y %H:%M")
+    context['location'] = event.location
+    context['short_description'] = event.short_description
+    context['long_description'] = event.long_description
+    context['event_id'] = event.id
+    context['geometry'] = [event.long, event.lat]
+
+    return render(request, 'events/show_event.html', context)
