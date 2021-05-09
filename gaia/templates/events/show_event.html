@@ -12,16 +12,62 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css' rel='stylesheet' />
 
-
     <title>Hello, world!</title>
   </head>
   <body>
+    
+    <h1>{{ event_name }}</h1>
+    <h1>{{ host_name }}</h1>
 
-    <form method='POST'>
-      {% csrf_token %}
-          {{ form.as_table }}
-          <input type="submit" value="submit event" />
-    </form>
+    <div id='map' style='width: 400px; height: 300px;'></div>
+
+    <script>
+
+    mapboxgl.accessToken = '{{ mapbox_access_token }}';
+    var map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/mapbox/streets-v11', // style URL
+        center: {{ geometry }}, // starting position [lng, lat]
+        zoom: 13, // starting zoom
+        interactive: false
+    });
+
+    map.on('load', function() {
+      map.addSource('specific_event', {
+          'type': 'geojson',
+          'data': {
+            'type': 'FeatureCollection',
+            'features': [
+                {
+                  'type': 'Feature',
+                  'geometry': {
+                    'type': 'Point',
+                    'coordinates': {{ geometry }}
+                  }
+                }
+            ]
+          }
+      });
+
+      map.addLayer({
+        'id': 'specific_event',
+        'type': 'circle',
+        'source': 'specific_event',
+        'paint': {
+        'circle-color': '#4264fb',
+        'circle-radius': 6,
+        'circle-stroke-width': 2,
+        'circle-stroke-color': '#ffffff'
+      }
+      });
+
+      var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+      }).setLngLat({{ geometry }}).addTo(map);
+    });
+    
+    </script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
