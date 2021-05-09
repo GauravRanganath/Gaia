@@ -79,6 +79,7 @@ body{
 .form-container {
     margin-top: 50px;
     margin-left: 50px;
+    font-family: 'Lato', sans-serif;
 }
 
 #id_event_name {
@@ -102,4 +103,13 @@ body{
 #id_long_description {
     width: 1000px;
     height: 100px;
+}
+
+#submit-btn {
+    background-color: #215273 !important;
+    border:  #215273 !important;
+    padding: 10px !important;
+    font-family: 'Lato', sans-serif;
+    letter-spacing: 5px;
+    color: white;
 }

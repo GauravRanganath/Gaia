@@ -41,7 +41,7 @@ class CreateEventView(CreateView):
         message = configure_sms(event_name=self.object.event_name, short_description=self.object.short_description, location=self.object.location, start_date=self.object.start_date, host_name=self.object.host_name)
         sms_loop(message)
 
-        return HttpResponseRedirect("http://127.0.0.1:8000")
+        return HttpResponseRedirect("http://127.0.0.1:8001")
 
 
 def serialize(data):
