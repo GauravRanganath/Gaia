@@ -25,9 +25,6 @@ class CreateEventView(CreateView):
     fields = ['event_name', 'host_name', 'start_date', 'end_date', 'location', 'short_description', 'long_description']
     template_name = 'events/create_event.html'
     success_url = 'create_event'
-    widgets = {
-        'event_name': forms.TextInput(attrs={'class': 'myfieldclass'}),
-        }
 
     def get_context_data(self, **kwargs):
        context =  super().get_context_data(**kwargs)
